@@ -474,7 +474,9 @@ Implement a function that returns the last digit of a given number.
 -}
 -- DON'T FORGET TO SPECIFY THE TYPE IN HERE
 lastDigit :: Integral a => a -> a
-lastDigit n = mod n 10
+lastDigit n 
+  | n >= 0 = mod n 10
+  | otherwise = lastDigit (- n)
 
 
 {- |
@@ -540,7 +542,7 @@ value after "=" where the condition is true.
 Casual reminder about adding top-level type signatures for all functions :)
 -}
 
-mid :: (Num a, Ord a) => a -> a -> a -> a
+mid :: (Ord a) => a -> a -> a -> a
 mid x y z 
   | y <= x && x <= z = x
   | z <= x && x <= y = x
@@ -560,6 +562,7 @@ True
 >>> isVowel 'x'
 False
 -}
+isVowel :: Char -> Bool
 isVowel c 
  | c == 'a' = True
  | c == 'e' = True
@@ -631,11 +634,12 @@ specifying complex expressions.
 -}
 
 sumLast2 :: Integral a => a -> a
-sumLast2 n = lastButOne + last
-  where
-    lastDigit x = mod x 10
-    last = lastDigit n
-    lastButOne = lastDigit (div n 10)
+sumLast2 n  
+  | n < 0 = sumLast2 (- n)
+  | otherwise = lastButOne + last
+      where
+        last = lastDigit n
+        lastButOne = lastDigit (div n 10)
 
 {- |
 =💣= Task 10*
